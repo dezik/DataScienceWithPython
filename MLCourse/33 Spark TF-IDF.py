@@ -4,7 +4,7 @@ from pyspark.mllib.feature import IDF
 
 # Boilerplate Spark stuff:
 conf = SparkConf().setMaster("local").setAppName("SparkTFIDF")
-sc = SparkContext(conf = conf)
+sc = SparkContext(conf=conf)
 
 # Load documents (one per line).
 rawData = sc.textFile("subset-small.tsv")
@@ -15,7 +15,7 @@ documents = fields.map(lambda x: x[3].split(" "))
 documentNames = fields.map(lambda x: x[1])
 
 # Now hash the words in each document to their term frequencies:
-hashingTF = HashingTF(100000)  #100K hash buckets just to save some memory
+hashingTF = HashingTF(100000)  # 100K hash buckets just to save some memory
 tf = hashingTF.transform(documents)
 
 # At this point we have an RDD of sparse vectors representing each document,
