@@ -1,14 +1,15 @@
 from __future__ import print_function
 
-from pyspark.ml.regression import LinearRegression
-
-from pyspark.sql import SparkSession
 from pyspark.ml.linalg import Vectors
+from pyspark.ml.regression import LinearRegression
+from pyspark.sql import SparkSession
 
 if __name__ == "__main__":
 
     # Create a SparkSession (Note, the config section is only for Windows!)
-    spark = SparkSession.builder.config("spark.sql.warehouse.dir", "file:///C:/temp").appName("LinearRegression").getOrCreate()
+    spark = SparkSession.builder \
+        .config("spark.sql.warehouse.dir", "file:///C:/temp") \
+        .appName("LinearRegression").getOrCreate()
 
     # Load up our data and convert it to the format MLLib expects.
     inputLines = spark.sparkContext.textFile("regression.txt")
@@ -47,8 +48,7 @@ if __name__ == "__main__":
 
     # Print out the predicted and actual values for each point
     for prediction in predictionAndLabel:
-      print(prediction)
-
+        print(prediction)
 
     # Stop the session
     spark.stop()
