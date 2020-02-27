@@ -1,12 +1,12 @@
 from pyspark import SparkConf, SparkContext
 from pyspark.mllib.feature import HashingTF
 from pyspark.mllib.feature import IDF
-#from pyspark.mllib.linalg.distributed import RowMatrix
+# from pyspark.mllib.linalg.distributed import RowMatrix
 from pyspark.mllib.feature import PCA as PCAmllib
 
 # Boilerplate Spark stuff:
 conf = SparkConf().setMaster("local").setAppName("SparkTFIDF")
-sc = SparkContext(conf = conf)
+sc = SparkContext(conf=conf)
 
 # Load documents (one per line).
 rawData = sc.textFile("e:/sundog-consult/Udemy/DataScience/subset-small.tsv")
@@ -17,7 +17,7 @@ documents = fields.map(lambda x: x[3].split(" "))
 documentNames = fields.map(lambda x: x[1])
 
 # Now hash the words in each document to their term frequencies:
-hashingTF = HashingTF(100000)  #100K hash buckets just to save some memory
+hashingTF = HashingTF(100000)  # 100K hash buckets just to save some memory
 tf = hashingTF.transform(documents)
 
 # At this point we have an RDD of sparse vectors representing each document,
@@ -33,9 +33,9 @@ tfidf = idf.transform(tf)
 model = PCAmllib(2).fit(tfidf)
 pc = model.transform(tfidf)
 
-#mat = RowMatrix(tfidf)
+# mat = RowMatrix(tfidf)
 # Calculate PCA
-#pc = mat.computePrincipalComponents(int(mat.numCols))
+# pc = mat.computePrincipalComponents(int(mat.numCols))
 
 print("Principal components :")
 print(pc)
