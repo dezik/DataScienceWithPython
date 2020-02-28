@@ -10,6 +10,7 @@ from pyspark.mllib.tree import DecisionTree
 # Boilerplate Spark stuff:
 conf = SparkConf().setMaster("local").setAppName("SparkDecisionTree")
 sc = SparkContext(conf=conf)
+sc.setLogLevel("ERROR")
 
 
 # Some functions that convert our CSV input data into numerical
